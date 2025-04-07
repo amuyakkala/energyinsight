@@ -65,4 +65,6 @@ Supports optional filters via query params:
 
 
 
+##images 
 
+![Dashboard Screenshot](https://private-user-images.githubusercontent.com/141442964/431143010-7b8c4533-cda0-429a-b079-91d4ae10b6eb.png)
