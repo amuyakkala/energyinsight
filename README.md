@@ -1,69 +1,104 @@
-# ⚡ Energy Insight Dashboard
+# EnergyInsight Documentation
 
-A full-stack energy dashboard that provides visual insights into energy consumption and generation. Built with **React**, **FastAPI**, and **Docker**, it supports filtering by date and energy source.
+## Project Overview
+EnergyInsight is a full-stack web application built to visualize renewable energy data through an interactive dashboard. It includes user authentication, data filtering, and detailed analytics presented through intuitive charts.
 
-## 🚀 Features
-- ✅ User authentication (Register/Login)
-- 📅 Filter data by date range
-- 🔌 Filter data by energy source (Solar, Wind, Grid)
-- 📈 Interactive charts for trends in consumption/generation
-- 🐳 Fully containerized using Docker
+## Tech Stack
+- **Frontend:** React.js, Tailwind CSS, Chart.js
+- **Backend:** FastAPI (Python), JWT Authentication
+- **Database:** SQLite (development-friendly)
+- **Deployment:** Docker, Docker Compose
 
-## 🛠 Tech Stack
-- **Frontend:** React + TypeScript + Tailwind CSS + Chart.js
-- **Backend:** FastAPI (Python)
-- **Authentication:** Bearer token-based
-- **Deployment:** Docker + Docker Compose
+## Project Structure
+```
+energyinsight-main/
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/  # UI components
+│   │   ├── pages/       # Dashboard, auth pages
+│   │   ├── services/    # API handling
+│   │   └── App.js
+│   ├── package.json
+│   └── tailwind.config.js
+├── backend/
+│   ├── main.py          # API entry point
+│   ├── routers/         # API endpoints
+│   ├── models/          # DB models
+│   ├── schemas/         # Validation schemas
+│   └── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
+└── README.md
+```
 
-## 📦 Prerequisites
-- Node.js (v18+)
+## Setup Instructions (Local)
+
+**Requirements:**
+- Node.js
+- Python 3.8+
 - Docker & Docker Compose
-- Python 3.10+ (only if running backend locally without Docker)
 
-## 💻 Running Locally (Without Docker)
+**Frontend Setup:**
+```bash
+cd frontend
+npm install
+npm run start
+```
+- Open: `http://localhost:3000`
 
-### 1. Backend
+**Backend Setup:**
+```bash
 cd backend
 pip install -r requirements.txt
 uvicorn main:app --reload
+```
+- API Docs: `http://localhost:8000/docs`
 
-Access API at: http://localhost:8000
+## Docker Deployment (Easy to run):
 
-### 2. Frontend
-cd frontend
-npm install
-npm start
+Running the project is simple with Docker:
 
-App will run at: http://localhost:3000
+```bash
+docker-compose up --build
+```
 
-## 🐳 Running with Docker (Recommended)
+Then access the app directly:
 
-### 1. Build the containers
-docker-compose build
+- Frontend: `http://localhost:3000`
+- Backend API: `http://localhost:8000`
 
-### 2. Start the app
-docker-compose up
+## API Usage
 
-- Frontend: http://localhost:3000
-- Backend: http://localhost:8000
+### User Authentication:
+- `POST /auth/register`
+  - Payload: `{ "username": "", "password": "" }`
+  - Returns: User details & JWT token.
 
-## 🔐 Auth Endpoints
+- `POST /auth/login`
+  - Payload: `{ "username": "", "password": "" }`
+  - Returns: JWT token.
 
-| Method | Endpoint         | Description         |
-|--------|------------------|---------------------|
-| POST   | /auth/register   | Register a user     |
-| POST   | /auth/login      | Login and get token |
+### Dashboard Data:
+- `GET /api/data`
+  - Headers: `{ "Authorization": "Bearer <token>" }`
+  - Returns: Dashboard data.
 
-## ⚡ Energy Data API
+- `GET /api/data?filter=solar`
+  - Headers: `{ "Authorization": "Bearer <token>" }`
+  - Returns: Filtered data.
+  - **Note:** Due to limited dataset entries, please verify the available date range in the dataset before testing filters to ensure functionality.
 
-Endpoint: /energy/  
-Supports optional filters via query params:
+## Assumptions Made:
+- SQLite is used as a simple, local database suitable for development/testing.
+- Docker containers expose standard local ports (`3000`, `8000`).
+- JWT tokens have a default expiry (24 hrs) suited to typical authentication scenarios.
 
-- start_date=YYYY-MM-DD
-- end_date=YYYY-MM-DD
-- source=solar | wind | grid
+## Future Improvements:
+- Real-time data updates using WebSockets or SSE.
+- Extended filtering (by location, timeframes, etc.).
+- Robust production-level database integration (PostgreSQL/MySQL).
+- Enhanced security measures (rate limiting, stronger JWT management).
+- Comprehensive automated testing (unit and integration tests).
 
-
-
-##images 
 
